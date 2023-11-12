@@ -1,0 +1,52 @@
+/* Add this to your styles.css or a separate CSS file */
+
+.navbar {
+    background-color: #435585;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .navbar-list {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-item {
+    margin-right: 15px;
+  }
+  
+  .navbar-item a,
+  .get-started-button {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  .navbar-item a:hover,
+  .get-started-button:hover {
+    text-decoration: underline;
+  }
+  
+  .get-started-button {
+    background-color: #4CAF50;
+    border-radius: 4px;
+  }
+  
+  .get-started-button:hover {
+    background-color: #45a049;
+  }
+  
