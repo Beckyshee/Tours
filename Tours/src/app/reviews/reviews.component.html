@@ -1,0 +1,35 @@
+<div class="flex">
+    <app-sidebar></app-sidebar>
+    
+    <div class="main-content p-4">
+      <h2 class="text-2xl font-semibold mb-4">Manage Reviews</h2>
+  
+      <!-- Reviews Table -->
+      <table class="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">Review ID</th>
+            <th class="py-2 px-4 border-b">Tour Name</th>
+            <th class="py-2 px-4 border-b">User</th>
+            <th class="py-2 px-4 border-b">Rating</th>
+            <th class="py-2 px-4 border-b">Review</th>
+            <th class="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="reviewTableBody">
+          <!-- Filled dynamically with JavaScript or server data -->
+          <tr>
+            <td class="py-2 px-4 border-b">789012</td>
+            <td class="py-2 px-4 border-b">Cultural Excursion</td>
+            <td class="py-2 px-4 border-b">jane_doe</td>
+            <td class="py-2 px-4 border-b">5</td>
+            <td class="py-2 px-4 border-b">Great experience! Highly recommended!</td>
+            <td class="py-2 px-4 border-b space-x-2">
+              <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="deleteReview('789012')">Delete</button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>

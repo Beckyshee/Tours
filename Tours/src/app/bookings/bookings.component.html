@@ -1,0 +1,52 @@
+<div class="flex">
+    <app-sidebar></app-sidebar>
+    
+    <div class="main-content p-4">
+      <h2 class="text-2xl font-semibold mb-4">Manage Bookings</h2>
+  
+      <!-- Bookings Table -->
+      <table class="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">Booking ID</th>
+            <th class="py-2 px-4 border-b">Tour Name</th>
+            <th class="py-2 px-4 border-b">User</th>
+            <th class="py-2 px-4 border-b">Status</th>
+            <th class="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookingTableBody">
+          <!-- Filled dynamically with JavaScript or server data -->
+          <tr>
+            <td class="py-2 px-4 border-b">123456</td>
+            <td class="py-2 px-4 border-b">Safari Adventure</td>
+            <td class="py-2 px-4 border-b">john_doe</td>
+            <td class="py-2 px-4 border-b">Confirmed</td>
+            <td class="py-2 px-4 border-b space-x-2">
+              <button class="bg-blue-500 text-white px-2 py-1 rounded" onclick="viewBookingDetails('123456')">View Details</button>
+              <button class="bg-yellow-500 text-white px-2 py-1 rounded">Update Status</button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Booking Details Modal -->
+  <div id="bookingDetailsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeBookingModal()">&times;</span>
+      <h2 class="text-xl font-semibold mb-4" id="bookingDetailsTitle"></h2>
+      
+      <!-- Display Booking Details -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2">Booking Details:</h3>
+        <!-- Populate with details dynamically -->
+        <p>Booking ID: <span id="bookingID"></span></p>
+        <p>Tour Name: <span id="bookingTourName"></span></p>
+        <p>User: <span id="bookingUser"></span></p>
+        <p>Status: <span id="bookingStatus"></span></p>
+      </div>
+    </div>
+  </div>

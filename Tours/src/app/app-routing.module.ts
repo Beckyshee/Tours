@@ -5,13 +5,31 @@ import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LandingComponent } from './landing/landing.component';
 import { FooterComponent } from './footer/footer.component';
+import { AdmindboardComponent } from './admindboard/admindboard.component';
+import { ToursComponent } from './tours/tours.component';
+import { BookingsComponent } from './bookings/bookings.component';
+import { UsersComponent } from './users/users.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { UserdboardComponent } from './userdboard/userdboard.component';
+
+
 
 const routes: Routes = [
   {path: 'navbar', component:NavbarComponent},
   {path: 'landing', component:LandingComponent},
   {path: 'login', component:LoginComponent},
   {path: 'register', component:RegisterComponent},
-  {path: 'footer', component:FooterComponent}
+  {path: 'admin', component:AdmindboardComponent},
+  {path: 'footer', component:FooterComponent},
+  {path: 'tours', component:ToursComponent},
+  {path: 'users', component:UsersComponent},
+  {path: 'bookings', component:BookingsComponent},
+  {path: 'reviews', component:ReviewsComponent},
+
+  // everything user side
+  {path: 'user', component: UserdboardComponent},
+  // {path: 'search', component: SearchComponent},
+
 ];
 
 @NgModule({

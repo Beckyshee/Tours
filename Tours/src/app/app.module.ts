@@ -9,7 +9,16 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LandingComponent } from './landing/landing.component';
 import { FooterComponent } from './footer/footer.component';
-import { AdminComponent } from './admin/admin.component';
+import { AdmindboardComponent } from './admindboard/admindboard.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { ToursComponent } from './tours/tours.component';
+import { HeaderComponent } from './header/header.component';
+import { BookingsComponent } from './bookings/bookings.component';
+import { UsersComponent } from './users/users.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { UserdboardComponent } from './userdboard/userdboard.component';
+
+
 
 @NgModule({
   declarations: [
@@ -19,7 +28,16 @@ import { AdminComponent } from './admin/admin.component';
     NavbarComponent,
     LandingComponent,
     FooterComponent,
-    AdminComponent
+    AdmindboardComponent,
+    SidebarComponent,
+    ToursComponent,
+    HeaderComponent,
+    BookingsComponent,
+    UsersComponent,
+    ReviewsComponent,
+    UserdboardComponent,
+   
+    
   ],
   imports: [
     BrowserModule,
