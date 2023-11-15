@@ -2,6 +2,9 @@ import mssql from 'mssql'
 import { sqlConfig } from '../config/sqlConfig'
 
 export default class Connection{
+    static query(arg0: string) {
+        throw new Error('Method not implemented.');
+    }
 
     private pool: Promise <mssql.ConnectionPool>
 

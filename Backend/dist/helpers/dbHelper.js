@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mssql_1 = __importDefault(require("mssql"));
 const sqlConfig_1 = require("../config/sqlConfig");
 class Connection {
+    static query(arg0) {
+        throw new Error('Method not implemented.');
+    }
     constructor() {
         this.pool = this.getConnection();
     }

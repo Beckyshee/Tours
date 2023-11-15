@@ -1,10 +1,11 @@
 CREATE TABLE Tours (
   TourID SERIAL PRIMARY KEY,
-  Title VARCHAR(255) NOT NULL,
-  Description TEXT NOT NULL,
+  tourTitle VARCHAR(255) NOT NULL,
+  shortDescription TEXT NOT NULL,
   Destination VARCHAR(255) NOT NULL,
   Duration INT NOT NULL,
   Price INT NOT NULL,
-  Type VARCHAR(255) NOT NULL,
-  Status VARCHAR(255) DEFAULT 'Active'
+  tourType VARCHAR(255) NOT NULL,
+  tourImage VARCHAR(255)
+  -- Status VARCHAR(255) DEFAULT 'Active'
 );

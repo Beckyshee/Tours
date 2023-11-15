@@ -20,10 +20,10 @@ export class LoginComponent {
   
     
   }
-  getUser(){
+  async getUser(){
   
   let user_details: User = this.loginForm.value;
-  this.authService.registerUser(user_details)
+ const response= await this.authService.registerUser(user_details)
     
   }
 }
