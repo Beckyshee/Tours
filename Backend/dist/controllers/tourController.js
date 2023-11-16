@@ -19,11 +19,11 @@ const dbhelper = new dbHelper_1.default();
 const getTours = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const results = yield dbhelper.query('SELECT * FROM tours');
-        res.json(results);
+        res.json(results.recordset);
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: error });
     }
 });
 exports.getTours = getTours;

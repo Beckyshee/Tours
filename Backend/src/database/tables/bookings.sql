@@ -7,3 +7,6 @@ CREATE TABLE Bookings (
   -- Status VARCHAR(255) DEFAULT 'Pending',
   
 );
+
+
+USE Tours;

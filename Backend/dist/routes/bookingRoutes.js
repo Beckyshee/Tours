@@ -28,10 +28,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const bookingsController = __importStar(require("../controllers/bookingContoller"));
-const router = express_1.default.Router();
-router.get('/', bookingsController.getBookings);
+const booking_router = express_1.default.Router();
+booking_router.get('/', bookingsController.getBookings);
 // router.get('/:id', bookingsController.getBookingById);
-router.post('/', bookingsController.createBooking);
-router.put('/:id', bookingsController.updateBooking);
-router.delete('/:id', bookingsController.deleteBooking);
-exports.default = router;
+booking_router.post('/', bookingsController.createBooking);
+booking_router.put('/:id', bookingsController.updateBooking);
+booking_router.delete('/:id', bookingsController.deleteBooking);
+exports.default = booking_router;

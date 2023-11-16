@@ -34,7 +34,7 @@ const createReview = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const newReview = yield dbhelper.execute('sp_CreateReview', {
             userId,
             tourId,
-            rating,
+            // rating,
             comment,
         });
         res.status(201).json(newReview);

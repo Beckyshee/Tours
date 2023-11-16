@@ -22,7 +22,7 @@ constructor(private fb:FormBuilder, private authService: AuthService){
   
 }
 createUser(){
-  // console.log(this.registrationForm.value);
+  console.log(this.registrationForm.value);
   let user_details: User = this.registrationForm.value;
 this.authService.registerUser(user_details)
   

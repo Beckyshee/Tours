@@ -29,13 +29,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const reviewController = __importStar(require("../controllers/reviewControllers"));
-const router = express_1.default.Router();
+const review_router = express_1.default.Router();
 // for a specific tour
 // router.get('/tour/:tourId', reviewController.getReviewsByTourId);
 // Create a new review
-router.post('/', reviewController.createReview);
+review_router.post('/', reviewController.createReview);
 // Update a review
-router.put('/:id', reviewController.updateReview);
+review_router.put('/:id', reviewController.updateReview);
 // Delete a review
-router.delete('/:id', reviewController.deleteReview);
-exports.default = router;
+review_router.delete('/:id', reviewController.deleteReview);
+exports.default = review_router;

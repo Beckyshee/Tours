@@ -1,5 +1,5 @@
 CREATE TABLE Tours (
-  TourID SERIAL PRIMARY KEY,
+  TourID INT PRIMARY KEY,
   tourTitle VARCHAR(255) NOT NULL,
   shortDescription TEXT NOT NULL,
   Destination VARCHAR(255) NOT NULL,
@@ -9,3 +9,6 @@ CREATE TABLE Tours (
   tourImage VARCHAR(255)
   -- Status VARCHAR(255) DEFAULT 'Active'
 );
+
+
+USE Tours;

@@ -3,12 +3,12 @@
 import express from 'express';
 import * as toursController from '../controllers/tourController';
 
-const router = express.Router();
+const tour_router = express.Router();
 
-router.get('/', toursController.getTours);
-// router.get('/:id', toursController.getTourById);
-router.post('/', toursController.createTour);
-router.put('/:id', toursController.updateTour);
-router.delete('/:id', toursController.deleteTour);
+tour_router.get('', toursController.getTours);
+// tour_router.get('/:id', toursController.getTourById);
+tour_router.post('/', toursController.createTour);
+tour_router.put('/:id', toursController.updateTour);
+tour_router.delete('/:id', toursController.deleteTour);
 
-export default router;
+export default tour_router;

@@ -29,10 +29,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const tourRoutes_1 = __importDefault(require("./routes/tourRoutes"));
+const reviewRoutes_1 = __importDefault(require("./routes/reviewRoutes"));
+const bookingRoutes_1 = __importDefault(require("./routes/bookingRoutes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use((0, express_1.json)());
 app.use('/user', userRoutes_1.default);
+app.use('/tours', tourRoutes_1.default);
+app.use('/reviews', reviewRoutes_1.default);
+app.use('/bookings', bookingRoutes_1.default);
 app.use((error, req, res, next) => {
     res.json({
         message: error.message

@@ -8,10 +8,10 @@ const dbhelper = new Connection();
 export const getTours = async (req: Request, res: Response) => {
   try {
     const results = await dbhelper.query('SELECT * FROM tours');
-    res.json(results);
+    res.json(results.recordset);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error });
   }
 };
 
