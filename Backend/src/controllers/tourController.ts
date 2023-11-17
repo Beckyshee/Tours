@@ -50,32 +50,35 @@ export const createTour = async (req: Request, res: Response) => {
 };
 
 export const updateTour = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { tourTitle, shortDescription, destination, duration, price, tourType } = req.body;
+  
+  const {  TourID } = req.params;
+  const {tourTitle, shortDescription, Destination, Duration, Price, tourType } = req.body;
+  
 
   try {
     const updatedTour = await dbhelper.execute('sp_UpdateTour', {
-      id,
+      TourID,
       tourTitle,
       shortDescription,
-      destination,
-      duration,
-      price,
+      Destination,
+      Duration,
+      Price,
       tourType,
     });
+    console.log(updatedTour)
 
     res.json(updatedTour);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error });
   }
 };
 
 export const deleteTour = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { TourID } = req.params;
 
   try {
-    await dbhelper.execute('sp_DeleteTour', { id });
+    await dbhelper.execute('sp_DeleteTour', { TourID });
     res.status(204).send();
   } catch (error) {
     console.error(error);

@@ -1,0 +1,14 @@
+#
+POST http://localhost:1000/user/register
+Content-Type: application/json
+ 
+{
+ 
+   "fullname":"becky",
+   "password":"123456",
+   "email": "beckyshee@yopmail.com",
+   "phone_no": "0712345678",
+   "role":"user"
+
+}
+ 

@@ -25,7 +25,7 @@ export const registerUser = async(req:Request, res: Response) =>{
 
         const emailTaken = (await dbhelper.query(`SELECT * FROM Users WHERE email = '${email}'`)).recordset
         const phonenoTaken = (await dbhelper.query(`SELECT * FROM Users WHERE phone_no = '${phone_number}'`)).recordset
-        // const id_no_Taken = (await dbhelper.query(`SELECT * FROM Employees WHERE id_no = '${id_no}'`)).recordset
+        // const id_no_Taken = (await dbhelper.query(`SELECT * FROM Users WHERE id_no = '${id_no}'`)).recordset
       
 
         if(!isEmpty(emailTaken)){
@@ -39,7 +39,7 @@ export const registerUser = async(req:Request, res: Response) =>{
         // }
         
 
-        let employee_id = v4()
+        let UserID = v4()
 
         const hashedPwd = await bcrypt.hash(password, 5)
 
@@ -47,8 +47,8 @@ export const registerUser = async(req:Request, res: Response) =>{
 
         
         
-        let result = dbhelper.execute('registerEmployee', {
-            employee_id, fullname, email, phone_number, password: hashedPwd
+        let result = dbhelper.execute('registerUser', {
+            UserID, fullname, email, phone_number, password: hashedPwd
         })
         
         console.log(result);
@@ -70,7 +70,7 @@ export const loginUser = async(req:Request, res: Response) =>{
 
         const pool = await mssql.connect(sqlConfig)
 
-        let user = await (await pool.request().input("email", email).input("password", password).execute('loginEmployee')).recordset
+        let user = await (await pool.request().input("email", email).input("password", password).execute('loginUser')).recordset
         
         if(user[0]?.email  == email){
             const CorrectPwd = await bcrypt.compare(password, user[0]?.password)
@@ -117,7 +117,7 @@ export const getAllUsers = async(req:Request, res:Response)=>{
         const pool = await mssql.connect(sqlConfig)
 
         let users = (await pool.request().execute('fetchAllUsers')).recordset
-        // let users = (await pool.request().query('SELECT * FROM Employees')).recordset
+        // let users = (await pool.request().query('SELECT * FROM Users')).recordset
 
         return res.status(200).json({
            users:users 
@@ -132,15 +132,15 @@ export const getAllUsers = async(req:Request, res:Response)=>{
 export const getOneUser = async(req:Request, res:Response)=>{
     try {
 
-        let id = req.params.id 
+        let UserID = req.params.UserID
 
         const pool = await mssql.connect(sqlConfig)
 
-        let employee = (await pool.request().input('employee_id',id).execute('fetchOneEmployee')).recordset
-        // let employees = (await pool.request().query('SELECT * FROM Employees')).recordset
+        let user = (await pool.request().input('UserID',UserID).execute('fetchOneUsers')).recordset
+        // let Users = (await pool.request().query('SELECT * FROM Users')).recordset
 
         return res.status(200).json({
-            employee: employee
+            user: user
         })
         
     } catch (error) {

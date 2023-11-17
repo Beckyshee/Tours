@@ -59,30 +59,31 @@ const createTour = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createTour = createTour;
 const updateTour = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const { tourTitle, shortDescription, destination, duration, price, tourType } = req.body;
+    const { TourID } = req.params;
+    const { tourTitle, shortDescription, Destination, Duration, Price, tourType } = req.body;
     try {
         const updatedTour = yield dbhelper.execute('sp_UpdateTour', {
-            id,
+            TourID,
             tourTitle,
             shortDescription,
-            destination,
-            duration,
-            price,
+            Destination,
+            Duration,
+            Price,
             tourType,
         });
+        console.log(updatedTour);
         res.json(updatedTour);
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: error });
     }
 });
 exports.updateTour = updateTour;
 const deleteTour = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const { TourID } = req.params;
     try {
-        yield dbhelper.execute('sp_DeleteTour', { id });
+        yield dbhelper.execute('sp_DeleteTour', { TourID });
         res.status(204).send();
     }
     catch (error) {

@@ -28,10 +28,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const bookingsController = __importStar(require("../controllers/bookingContoller"));
+const verifyToken_1 = require("../middleware/verifyToken");
 const booking_router = express_1.default.Router();
 booking_router.get('/', bookingsController.getBookings);
 // router.get('/:id', bookingsController.getBookingById);
-booking_router.post('/', bookingsController.createBooking);
-booking_router.put('/:id', bookingsController.updateBooking);
-booking_router.delete('/:id', bookingsController.deleteBooking);
+booking_router.post('/', verifyToken_1.verifyToken, bookingsController.createBooking);
+booking_router.put('/:BookingID', verifyToken_1.verifyToken, bookingsController.updateBooking);
+booking_router.delete('/:BookingID', verifyToken_1.verifyToken, bookingsController.deleteBooking);
 exports.default = booking_router;

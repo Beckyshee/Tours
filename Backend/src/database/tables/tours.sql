@@ -1,5 +1,5 @@
 CREATE TABLE Tours (
-  TourID INT PRIMARY KEY,
+  TourID VARCHAR(255) PRIMARY KEY,
   tourTitle VARCHAR(255) NOT NULL,
   shortDescription TEXT NOT NULL,
   Destination VARCHAR(255) NOT NULL,

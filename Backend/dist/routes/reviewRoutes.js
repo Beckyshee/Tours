@@ -29,13 +29,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const reviewController = __importStar(require("../controllers/reviewControllers"));
+const verifyToken_1 = require("../middleware/verifyToken");
 const review_router = express_1.default.Router();
 // for a specific tour
 // router.get('/tour/:tourId', reviewController.getReviewsByTourId);
 // Create a new review
 review_router.post('/', reviewController.createReview);
 // Update a review
-review_router.put('/:id', reviewController.updateReview);
+review_router.put('/:ReviewID', reviewController.updateReview);
 // Delete a review
-review_router.delete('/:id', reviewController.deleteReview);
+review_router.delete('/:ReviewID', verifyToken_1.verifyToken, reviewController.deleteReview);
 exports.default = review_router;

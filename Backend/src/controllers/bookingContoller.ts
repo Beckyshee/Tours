@@ -30,12 +30,12 @@ export const getBookings = async (req: Request, res: Response) => {
 // };
 
 export const createBooking = async (req: Request, res: Response) => {
-  const { userId, tourId, bookingDate } = req.body;
+  const { UserID, TourID, bookingDate } = req.body;
 
   try {
     const newBooking = await dbhelper.execute('sp_CreateBooking', {
-      userId,
-      tourId,
+      UserID,
+      TourID,
       bookingDate,
     });
 
@@ -47,12 +47,12 @@ export const createBooking = async (req: Request, res: Response) => {
 };
 
 export const updateBooking = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { BookingID} = req.params;
   const { userId, tourId, bookingDate } = req.body;
 
   try {
     const updatedBooking = await dbhelper.execute('sp_UpdateBooking', {
-      id,
+      BookingID,
       userId,
       tourId,
       bookingDate,
@@ -66,10 +66,10 @@ export const updateBooking = async (req: Request, res: Response) => {
 };
 
 export const deleteBooking = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { BookingID} = req.params;
 
   try {
-    await dbhelper.execute('sp_DeleteBooking', { id });
+    await dbhelper.execute('sp_DeleteBooking', { BookingID });
     res.status(204).send();
   } catch (error) {
     console.error(error);

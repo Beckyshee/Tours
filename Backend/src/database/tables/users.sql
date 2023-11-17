@@ -1,5 +1,5 @@
 CREATE TABLE Users (
-    UserID INT PRIMARY KEY NOT NULL,
+    UserID VARCHAR(255) PRIMARY KEY NOT NULL,
     fullname VARCHAR(200) NOT NULL,
     email VARCHAR(300) NOT NULL UNIQUE,
     phone_no VARCHAR(20) NOT NULL UNIQUE,
@@ -9,9 +9,9 @@ CREATE TABLE Users (
     -- welcomed BIT Default 0
 )
 
--- DROP TABLE Users
+-- DROP TABLE Users;
 
--- SELECT * FROM Users
+SELECT * FROM Users
 
 SELECT * FROM Users WHERE email ='wanjirubecky.rw@gmail.com' 
 

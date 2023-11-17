@@ -20,12 +20,12 @@ const dbhelper = new Connection();
 // };
 
 export const createReview = async (req: Request, res: Response) => {
-  const { userId, tourId, rating, comment } = req.body;
+  const { UserID, TourID, rating, comment } = req.body;
 
   try {
     const newReview = await dbhelper.execute('sp_CreateReview', {
-      userId,
-      tourId,
+      UserID,
+      TourID,
       rating,
       comment,
     });
@@ -38,12 +38,12 @@ export const createReview = async (req: Request, res: Response) => {
 };
 
 export const updateReview = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { ReviewID } = req.params;
   const { rating, comment } = req.body;
 
   try {
     const updatedReview = await dbhelper.execute('sp_UpdateReview', {
-      id,
+      ReviewID,
       rating,
       comment,
     });
@@ -56,10 +56,10 @@ export const updateReview = async (req: Request, res: Response) => {
 };
 
 export const deleteReview = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { ReviewID } = req.params;
 
   try {
-    await dbhelper.execute('sp_DeleteReview', { id });
+    await dbhelper.execute('sp_DeleteReview', { ReviewID });
     res.status(204).send();
   } catch (error) {
     console.error(error);

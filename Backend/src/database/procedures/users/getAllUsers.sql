@@ -7,10 +7,10 @@
 
 
 
-CREATE PROCEDURE fetchOneUser (@user_id VARCHAR(200))
+CREATE PROCEDURE fetchOneUser (@UserID VARCHAR(200))
 AS
 BEGIN
-    SELECT * FROM Users WHERE user_id = @user_id
+    SELECT * FROM Users WHERE UserID = @UserID
 END
 
 

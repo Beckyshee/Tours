@@ -42,7 +42,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         const emailTaken = (yield dbhelper.query(`SELECT * FROM Users WHERE email = '${email}'`)).recordset;
         const phonenoTaken = (yield dbhelper.query(`SELECT * FROM Users WHERE phone_no = '${phone_number}'`)).recordset;
-        // const id_no_Taken = (await dbhelper.query(`SELECT * FROM Employees WHERE id_no = '${id_no}'`)).recordset
+        // const id_no_Taken = (await dbhelper.query(`SELECT * FROM Users WHERE id_no = '${id_no}'`)).recordset
         if (!(0, lodash_1.isEmpty)(emailTaken)) {
             return res.json({ error: "This email is already in use" });
         }
@@ -52,11 +52,11 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         // if(!isEmpty(id_no_Taken)){
         //     return res.json({error: "This ID number is taken"})
         // }
-        let employee_id = (0, uuid_1.v4)();
+        let UserID = (0, uuid_1.v4)();
         const hashedPwd = yield bcrypt_1.default.hash(password, 5);
         // const pool = await mssql.connect(sqlConfig)
-        let result = dbhelper.execute('registerEmployee', {
-            employee_id, fullname, email, phone_number, password: hashedPwd
+        let result = dbhelper.execute('registerUser', {
+            UserID, fullname, email, phone_number, password: hashedPwd
         });
         console.log(result);
         return res.status(200).json({
@@ -75,7 +75,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
-        let user = yield (yield pool.request().input("email", email).input("password", password).execute('loginEmployee')).recordset;
+        let user = yield (yield pool.request().input("email", email).input("password", password).execute('loginUser')).recordset;
         if (((_a = user[0]) === null || _a === void 0 ? void 0 : _a.email) == email) {
             const CorrectPwd = yield bcrypt_1.default.compare(password, (_b = user[0]) === null || _b === void 0 ? void 0 : _b.password);
             if (!CorrectPwd) {
@@ -113,7 +113,7 @@ const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
         let users = (yield pool.request().execute('fetchAllUsers')).recordset;
-        // let users = (await pool.request().query('SELECT * FROM Employees')).recordset
+        // let users = (await pool.request().query('SELECT * FROM Users')).recordset
         return res.status(200).json({
             users: users
         });
@@ -127,12 +127,12 @@ const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getAllUsers = getAllUsers;
 const getOneUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let id = req.params.id;
+        let UserID = req.params.UserID;
         const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
-        let employee = (yield pool.request().input('employee_id', id).execute('fetchOneEmployee')).recordset;
-        // let employees = (await pool.request().query('SELECT * FROM Employees')).recordset
+        let user = (yield pool.request().input('UserID', UserID).execute('fetchOneUsers')).recordset;
+        // let Users = (await pool.request().query('SELECT * FROM Users')).recordset
         return res.status(200).json({
-            employee: employee
+            user: user
         });
     }
     catch (error) {

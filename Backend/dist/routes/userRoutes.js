@@ -8,5 +8,5 @@ user_router.post('/register', userControllers_1.registerUser);
 user_router.post('/login', userControllers_1.loginUser);
 user_router.get('/', verifyToken_1.verifyToken, userControllers_1.getAllUsers);
 user_router.get('/check_user_details', verifyToken_1.verifyToken, userControllers_1.checkUserDetails);
-user_router.get('/:id', verifyToken_1.verifyToken, userControllers_1.getOneUser);
+user_router.get('/:UserID', verifyToken_1.verifyToken, userControllers_1.getOneUser);
 exports.default = user_router;

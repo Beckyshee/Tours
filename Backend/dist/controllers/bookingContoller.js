@@ -40,11 +40,11 @@ exports.getBookings = getBookings;
 //   }
 // };
 const createBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, tourId, bookingDate } = req.body;
+    const { UserID, TourID, bookingDate } = req.body;
     try {
         const newBooking = yield dbhelper.execute('sp_CreateBooking', {
-            userId,
-            tourId,
+            UserID,
+            TourID,
             bookingDate,
         });
         res.status(201).json(newBooking);
@@ -56,11 +56,11 @@ const createBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createBooking = createBooking;
 const updateBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const { BookingID } = req.params;
     const { userId, tourId, bookingDate } = req.body;
     try {
         const updatedBooking = yield dbhelper.execute('sp_UpdateBooking', {
-            id,
+            BookingID,
             userId,
             tourId,
             bookingDate,
@@ -74,9 +74,9 @@ const updateBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.updateBooking = updateBooking;
 const deleteBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const { BookingID } = req.params;
     try {
-        yield dbhelper.execute('sp_DeleteBooking', { id });
+        yield dbhelper.execute('sp_DeleteBooking', { BookingID });
         res.status(204).send();
     }
     catch (error) {

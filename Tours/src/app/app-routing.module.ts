@@ -11,6 +11,7 @@ import { BookingsComponent } from './bookings/bookings.component';
 import { UsersComponent } from './users/users.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { UserdboardComponent } from './userdboard/userdboard.component';
+import { OffersComponent } from './offers/offers.component';
 
 
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'users', component:UsersComponent},
   {path: 'bookings', component:BookingsComponent},
   {path: 'reviews', component:ReviewsComponent},
+  {path: 'offers', component:OffersComponent},
 
   // everything user side
   {path: 'user', component: UserdboardComponent},

@@ -29,12 +29,12 @@ const dbhelper = new dbHelper_1.default();
 //   }
 // };
 const createReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, tourId, rating, comment } = req.body;
+    const { UserID, TourID, rating, comment } = req.body;
     try {
         const newReview = yield dbhelper.execute('sp_CreateReview', {
-            userId,
-            tourId,
-            // rating,
+            UserID,
+            TourID,
+            rating,
             comment,
         });
         res.status(201).json(newReview);
@@ -46,11 +46,11 @@ const createReview = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.createReview = createReview;
 const updateReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const { ReviewID } = req.params;
     const { rating, comment } = req.body;
     try {
         const updatedReview = yield dbhelper.execute('sp_UpdateReview', {
-            id,
+            ReviewID,
             rating,
             comment,
         });
@@ -63,9 +63,9 @@ const updateReview = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.updateReview = updateReview;
 const deleteReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const { ReviewID } = req.params;
     try {
-        yield dbhelper.execute('sp_DeleteReview', { id });
+        yield dbhelper.execute('sp_DeleteReview', { ReviewID });
         res.status(204).send();
     }
     catch (error) {
