@@ -1,22 +1,89 @@
-
+// tour.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Tours } from '../interfaces/tours';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ToursService {
-  private apiUrl = 'your_backend_api_url';
+export class TourService {
+  private apiUrl = 'http://localhost:1000';
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  searchTours(location: string): Observable<any[]> {
-    // Implement logic to fetch tours from the backend API
-    const url = `${this.apiUrl}/tours?location=${location}`;
-    return this.http.get<any[]>(url);
+  async getTours(): Promise<Tours[]> {
+    try {
+      let response = await fetch(`${this.apiUrl}/tours`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch tours');
+      }
+
+      const data = await response.json();
+      return data as Tours[];
+    } catch (error) {
+      console.error('Error during getTours:', error);
+      throw error;
+    }
   }
 
-  
+  async addTour(tour: Tours): Promise<Tours> {
+    try {
+      let response = await fetch(`${this.apiUrl}/tours`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tour),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add tour');
+      }
+
+      const newTour = await response.json();
+      return newTour as Tours;
+    } catch (error) {
+      console.error('Error during addTour:', error);
+      throw error;
+    }
+  }
+
+  async updateTour(tourId: number, updatedTour: Tours): Promise<Tours> {
+    try {
+      let response = await fetch(`${this.apiUrl}/tours/${tourId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedTour),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update tour');
+      }
+
+      const updatedData = await response.json();
+      return updatedData as Tours;
+    } catch (error) {
+      console.error('Error during updateTour:', error);
+      throw error;
+    }
+  }
+
+  async deleteTour(tourId: number): Promise<void> {
+    try {
+      let response = await fetch(`${this.apiUrl}/tours/${tourId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete tour');
+      }
+
+     
+    } catch (error) {
+      console.error('Error during deleteTour:', error);
+      throw error;
+    }
+  }
 }

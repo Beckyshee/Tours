@@ -4,7 +4,7 @@ export interface Tours{
     duration: string,
     price: string,
     tourType: string,
-    tourImage: string,
+    tourImage: File,//not sure if its file or string
     shortDescription: string
 }
 

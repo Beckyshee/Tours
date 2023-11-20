@@ -3,7 +3,7 @@ export interface User {
     email: string;
     phone_number: string;
     password: string;
-    confirm_password: string;
+    role?: string;
     }
     
 export interface User{
