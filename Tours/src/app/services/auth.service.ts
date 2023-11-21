@@ -13,7 +13,7 @@ export class AuthService {
       // Assign a default role during registration
       user.role = 'user';
 
-      let response = await fetch("http://localhost:1000/user/register", {
+      let response = await fetch("http://localhost:1200/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,9 +32,9 @@ export class AuthService {
     }
   }
 
-  async loginUser(user: User): Promise<void> {
+  async loginUser(user: User): Promise<any> {
     try {
-      let response = await fetch("http://localhost:1000/user/login", {
+      let response = await fetch("http://localhost:1200/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,17 +42,19 @@ export class AuthService {
         body: JSON.stringify(user),
       });
 
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Login failed');
+      // }
 
-      const data = await response.json();
+      // const data = await response.json();
 
-      // Retrieve user role from the response and store it in the LS
-      const userRole = data.role;
-      localStorage.setItem('userRole', userRole);
+      // // Retrieve user role from the response and store it in the LS
+      // const userRole = data.role;
+      // localStorage.setItem('userRole', userRole);
 
-      console.log(data);
+      // console.log(data);
+
+      return  response.json()
     } catch (error) {
       console.error('Error during login:', error);
     }

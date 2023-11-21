@@ -9,6 +9,6 @@ CREATE TABLE Bookings (
 );
 
 
-DROP TABLE Bookings;
 
-USE Tours;
+
+USE Tours2;

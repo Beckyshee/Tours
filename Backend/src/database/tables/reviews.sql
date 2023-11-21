@@ -9,4 +9,4 @@ CREATE TABLE Reviews (
   -- Add other relevant fields as needed
 );
 
-USE Tours;
+USE Tours2;

@@ -11,6 +11,8 @@ CREATE TABLE Users (
 
 -- DROP TABLE Users;
 
+-- DROP DATABASE Tours;
+
 SELECT * FROM Users
 
 SELECT * FROM Users WHERE email ='wanjirubecky.rw@gmail.com' 
@@ -19,4 +21,4 @@ UPDATE Users SET role = 'admin' WHERE email = 'wanjirubecky.rw@gmail.com'
 
 
 
-USE Tours;
+USE Tours2;

@@ -12,3 +12,6 @@ BEGIN
     VALUES(@UserID, @fullname, @email, @phone_no,@password)
 
 END
+
+-- USE Tours2;
+

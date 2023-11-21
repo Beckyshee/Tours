@@ -7,7 +7,7 @@ import { Tours } from '../interfaces/tours';
   providedIn: 'root',
 })
 export class TourService {
-  private apiUrl = 'http://localhost:1000';
+  private apiUrl = 'http://localhost:1200/tours';
 
   constructor() {}
 
@@ -28,20 +28,22 @@ export class TourService {
 
   async addTour(tour: Tours): Promise<Tours> {
     try {
-      let response = await fetch(`${this.apiUrl}/tours`, {
+    
+      let response = await fetch(`${this.apiUrl}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          
         },
         body: JSON.stringify(tour),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to add tour');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Failed to add tour');
+      // }
 
-      const newTour = await response.json();
-      return newTour as Tours;
+      // const newTour = await response.json();
+      return response.json();
     } catch (error) {
       console.error('Error during addTour:', error);
       throw error;

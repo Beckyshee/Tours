@@ -11,4 +11,6 @@ CREATE TABLE Tours (
 );
 
 
-USE Tours;
+USE Tours2;
+
+select  * from tours

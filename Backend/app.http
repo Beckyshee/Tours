@@ -1,5 +1,5 @@
-#
-POST http://localhost:1000/user/register
+###
+POST http://localhost:1200/user/register
 Content-Type: application/json
  
 {
@@ -12,3 +12,12 @@ Content-Type: application/json
 
 }
  
+
+##### login
+POST  http://localhost:1200/user/login
+Content-Type: application/json
+
+{
+   "email": "beckyshee@yopmail.com",
+    "password":"123456"
+}

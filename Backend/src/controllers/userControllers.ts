@@ -1,162 +1,177 @@
-import { Request, Response } from 'express'
-import mssql from 'mssql'
-import {v4} from 'uuid'
-import bcrypt from 'bcrypt'
-import { sqlConfig } from '../config/sqlConfig'
-import jwt from 'jsonwebtoken'
+import { Request, Response } from "express";
+import mssql from "mssql";
+import { v4 } from "uuid";
+import bcrypt from "bcrypt";
+import { sqlConfig } from "../config/sqlConfig";
+import jwt from "jsonwebtoken";
 // import dotenv from 'dotenv'
-import { LoginUser } from '../interfaces/user'
-import { ExtendedUser } from '../middleware/verifyToken'
-import Connection from '../helpers/dbHelper'
-import { registerUserSchema } from '../validation/userValidators'
-import { isEmpty } from 'lodash'
+import { LoginUser, User } from "../interfaces/user";
+import { ExtendedUser } from "../middleware/verifyToken";
+import Connection from "../helpers/dbHelper";
+import { registerUserSchema } from "../validation/userValidators";
+import { isEmpty } from "lodash";
+import { execute } from "../helpers/databaseHelper";
+import { generateToken } from "../helpers/generateToken";
 
-const dbhelper = new Connection
- 
-export const registerUser = async(req:Request, res: Response) =>{
-    try {
-        let {fullname, email, phone_number,  password} = req.body
+const dbhelper = new Connection();
 
-        let {error} = registerUserSchema.validate(req.body)
+export const registerUser = async (req: Request, res: Response) => {
+  try {
+    let { fullname, email, phone_no, password } = req.body;
 
-        if(error){
-            return res.status(404).json({error: error.details})
-        }
+    let { error } = registerUserSchema.validate(req.body);
 
-        const emailTaken = (await dbhelper.query(`SELECT * FROM Users WHERE email = '${email}'`)).recordset
-        const phonenoTaken = (await dbhelper.query(`SELECT * FROM Users WHERE phone_no = '${phone_number}'`)).recordset
-        // const id_no_Taken = (await dbhelper.query(`SELECT * FROM Users WHERE id_no = '${id_no}'`)).recordset
-      
-
-        if(!isEmpty(emailTaken)){
-            return res.json({error: "This email is already in use"})
-        }
-        if(!isEmpty(phonenoTaken)){
-            return res.json({error: "This phone number is taken"})
-        }
-        // if(!isEmpty(id_no_Taken)){
-        //     return res.json({error: "This ID number is taken"})
-        // }
-        
-
-        let UserID = v4()
-
-        const hashedPwd = await bcrypt.hash(password, 5)
-
-        // const pool = await mssql.connect(sqlConfig)
-
-        
-        
-        let result = dbhelper.execute('registerUser', {
-            UserID, fullname, email, phone_number, password: hashedPwd
-        })
-        
-        console.log(result);
-
-        return res.status(200).json({
-            message: 'User registered successfully'
-        })
-        
-    } catch (error) {
-        return res.json({
-            error: error
-        })
+    if (error) {
+      return res.status(404).json({ error: error.details });
     }
-}
 
-export const loginUser = async(req:Request, res: Response) =>{
-    try {
-        const {email, password} = req.body
+    const emailTaken = (
+      await dbhelper.query(`SELECT * FROM Users WHERE email = '${email}'`)
+    ).recordset;
 
-        const pool = await mssql.connect(sqlConfig)
+    console.log("becky");
+    const phonenoTaken = (
+      await dbhelper.query(`SELECT * FROM Users WHERE phone_no = '${phone_no}'`)
+    ).recordset;
+    // const id_no_Taken = (await dbhelper.query(`SELECT * FROM Users WHERE id_no = '${id_no}'`)).recordset
 
-        let user = await (await pool.request().input("email", email).input("password", password).execute('loginUser')).recordset
-        
-        if(user[0]?.email  == email){
-            const CorrectPwd = await bcrypt.compare(password, user[0]?.password)
-
-            if(!CorrectPwd){
-                return res.status(401).json({
-                    error: "Wrong password"
-                })
-            }
-
-            const LoginCredentials = user.map(records =>{
-                const {phone_number, ...rest}=records
-
-                return rest
-            })
-
-            console.log(LoginCredentials);
-
-            // dotenv.config()
-            const token = jwt.sign(LoginCredentials[0], process.env.SECRET as string, {
-                expiresIn: '3000s'
-            }) 
-
-            return res.status(200).json({
-                message: "Logged in successfully", token
-            })
-            
-        }else{
-            return res.json({
-                error: "Email not found"
-            })
-        }
-
-    } catch (error) {
-        return res.json({
-            error: error
-        })
+    if (!isEmpty(emailTaken)) {
+      return res.json({ error: "This email is already in use" });
     }
-}
-
-export const getAllUsers = async(req:Request, res:Response)=>{
-    try {
-
-        const pool = await mssql.connect(sqlConfig)
-
-        let users = (await pool.request().execute('fetchAllUsers')).recordset
-        // let users = (await pool.request().query('SELECT * FROM Users')).recordset
-
-        return res.status(200).json({
-           users:users 
-        })
-        
-    } catch (error) {
-        return res.json({
-            error: error
-        })
+    if (!isEmpty(phonenoTaken)) {
+      return res.json({ error: "This phone number is taken" });
     }
-}
-export const getOneUser = async(req:Request, res:Response)=>{
-    try {
+    // if(!isEmpty(id_no_Taken)){
+    //     return res.json({error: "This ID number is taken"})
+    // }
 
-        let UserID = req.params.UserID
+    let UserID = v4();
 
-        const pool = await mssql.connect(sqlConfig)
+    const hashedPwd = await bcrypt.hash(password, 5);
 
-        let user = (await pool.request().input('UserID',UserID).execute('fetchOneUsers')).recordset
-        // let Users = (await pool.request().query('SELECT * FROM Users')).recordset
+    // const pool = await mssql.connect(sqlConfig)
 
-        return res.status(200).json({
-            user: user
-        })
-        
-    } catch (error) {
-        return res.json({
-            error: error
-        })
+    let result = dbhelper.execute("registerUser", {
+      UserID,
+      fullname,
+      email,
+      phone_no,
+      password: hashedPwd,
+    });
+
+    console.log(result);
+
+    return res.status(200).json({
+      message: "User registered successfully",
+    });
+  } catch (error) {
+    return res.json({
+      error: error,
+    });
+  }
+};
+
+export const loginUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const procedureName = "getUserByEmail";
+    const params = {
+      email,
+    };
+
+    const result = await execute(procedureName, params);
+
+    if (result) {
+      //   console.log(result);
+
+      const recordset = result.recordset;
+      const user = recordset[0];
+
+      if (!user) {
+        return res.send("User Does not exist");
+      }
+
+      const CorrectPwd = await bcrypt.compare(password, user.password);
+
+      if (!CorrectPwd) {
+        return res.status(401).json({
+          error: "Wrong password",
+        });
+      }
+
+      const token = generateToken(
+        user.UserID,
+        user.fullname,
+        user.role,
+        user.email
+      );
+
+      return res.status(200).json({
+        message: "Logged in successfully",
+        token,
+        user: {
+          fullname: user.fullname,
+          role: user.role,
+          email: user.email,
+          UserID: user.UserID,
+        },
+      });
+    } else {
+      return res.json({
+        error: "Account not Found",
+      });
     }
-}
+  } catch (error) {
+    console.log(error);
 
-export const checkUserDetails = async (req:ExtendedUser, res:Response)=>{
-    
-    if(req.info){
+    return res.json({
+      error: error,
+    });
+  }
+};
 
-        return res.json({
-            info: req.info 
-        })
-    }
-    
-}
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const pool = await mssql.connect(sqlConfig);
+
+    let users = (await pool.request().execute("fetchAllUsers")).recordset;
+    // let users = (await pool.request().query('SELECT * FROM Users')).recordset
+
+    return res.status(200).json({
+      users: users,
+    });
+  } catch (error) {
+    return res.json({
+      error: error,
+    });
+  }
+};
+export const getOneUser = async (req: Request, res: Response) => {
+  try {
+    let UserID = req.params.UserID;
+
+    const pool = await mssql.connect(sqlConfig);
+
+    let user = (
+      await pool.request().input("UserID", UserID).execute("fetchOneUsers")
+    ).recordset;
+    // let Users = (await pool.request().query('SELECT * FROM Users')).recordset
+
+    return res.status(200).json({
+      user: user,
+    });
+  } catch (error) {
+    return res.json({
+      error: error,
+    });
+  }
+};
+
+export const checkUserDetails = async (req: ExtendedUser, res: Response) => {
+  if (req.info) {
+    return res.json({
+      info: req.info,
+    });
+  }
+};

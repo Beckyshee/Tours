@@ -44,6 +44,6 @@ app.use((error, req, res, next) => {
         message: error.message
     });
 });
-app.listen(1000, () => {
-    console.log("Server running on port 1000");
+app.listen(1200, () => {
+    console.log("Server running on port 1200");
 });

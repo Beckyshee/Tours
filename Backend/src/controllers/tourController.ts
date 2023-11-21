@@ -1,13 +1,15 @@
 // tours.controller.ts
 
-import { Request, Response } from 'express';
-import Connection from '../helpers/dbHelper';
+import { Request, Response } from "express";
+import Connection from "../helpers/dbHelper";
+import { execute } from "../helpers/databaseHelper";
+import { v4 as uuidv4 } from "uuid";
 
 const dbhelper = new Connection();
 
 export const getTours = async (req: Request, res: Response) => {
   try {
-    const results = await dbhelper.query('SELECT * FROM tours');
+    const results = await dbhelper.query("SELECT * FROM tours");
     res.json(results.recordset);
   } catch (error) {
     console.error(error);
@@ -30,33 +32,52 @@ export const getTours = async (req: Request, res: Response) => {
 // };
 
 export const createTour = async (req: Request, res: Response) => {
-  const { tourTitle, shortDescription, destination, duration, price, tourType } = req.body;
+  const {
+    tourImage,
+    tourTitle,
+    shortDescription,
+    Destination,
+    Duration,
+    Price,
+    tourType,
+  } = req.body;
+
+  console.log(req.body);
 
   try {
-    const newTour = await dbhelper.execute('sp_CreateTour', {
+    const newTour = await execute("sp_CreateTour", {
+      TourID: uuidv4(),
       tourTitle,
       shortDescription,
-      destination,
-      duration,
-      price,
+      Destination,
+      Duration,
+      Price,
       tourType,
+      tourImage,
     });
-    
+
     res.status(201).json(newTour);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 export const updateTour = async (req: Request, res: Response) => {
-  
-  const {  TourID } = req.params;
-  const {tourTitle, shortDescription, Destination, Duration, Price, tourType } = req.body;
-  
+  const { TourID } = req.params;
+  const {
+    tourImage,
+    tourTitle,
+    shortDescription,
+    Destination,
+    Duration,
+    Price,
+    tourType,
+  } = req.body;
 
   try {
-    const updatedTour = await dbhelper.execute('sp_UpdateTour', {
+    const updatedTour = await dbhelper.execute("sp_UpdateTour", {
+      tourImage,
       TourID,
       tourTitle,
       shortDescription,
@@ -65,7 +86,7 @@ export const updateTour = async (req: Request, res: Response) => {
       Price,
       tourType,
     });
-    console.log(updatedTour)
+    console.log(updatedTour);
 
     res.json(updatedTour);
   } catch (error) {
@@ -78,10 +99,10 @@ export const deleteTour = async (req: Request, res: Response) => {
   const { TourID } = req.params;
 
   try {
-    await dbhelper.execute('sp_DeleteTour', { TourID });
+    await dbhelper.execute("sp_DeleteTour", { TourID });
     res.status(204).send();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
