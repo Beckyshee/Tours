@@ -45,15 +45,23 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         // }
         let UserID = (0, uuid_1.v4)();
         const hashedPwd = yield bcrypt_1.default.hash(password, 5);
-        // const pool = await mssql.connect(sqlConfig)
-        let result = dbhelper.execute("registerUser", {
-            UserID,
-            fullname,
-            email,
-            phone_no,
-            password: hashedPwd,
-        });
-        console.log(result);
+        const pool = yield mssql_1.default.connect(sqlConfig_1.sqlConfig);
+        let result = yield pool
+            .request()
+            .input("UserID", mssql_1.default.VarChar, UserID)
+            .input("fullname", mssql_1.default.VarChar, fullname)
+            .input("email", mssql_1.default.VarChar, email)
+            .input("phone_no", mssql_1.default.VarChar, phone_no)
+            .input("password", mssql_1.default.VarChar, hashedPwd)
+            .execute("registerUser");
+        // let result = dbhelper.execute("registerUser", {
+        //   UserID,
+        //   fullname,
+        //   email,
+        //   phone_no,
+        //   password: hashedPwd,
+        // });
+        // console.log(result);
         return res.status(200).json({
             message: "User registered successfully",
         });

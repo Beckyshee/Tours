@@ -21,6 +21,6 @@ app.use((error: Error, req:Request, res:Response, next:NextFunction)=>{
     })
 })
 
-app.listen(1200, ()=>{
-    console.log("Server running on port 1200");
+app.listen(5300, ()=>{
+    console.log("Server running on port 5300");
 })

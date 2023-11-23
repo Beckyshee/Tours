@@ -49,17 +49,26 @@ export const registerUser = async (req: Request, res: Response) => {
 
     const hashedPwd = await bcrypt.hash(password, 5);
 
-    // const pool = await mssql.connect(sqlConfig)
+    const pool = await mssql.connect(sqlConfig)
 
-    let result = dbhelper.execute("registerUser", {
-      UserID,
-      fullname,
-      email,
-      phone_no,
-      password: hashedPwd,
-    });
+     let result = await pool
+       .request()
+       .input("UserID", mssql.VarChar, UserID)
+       .input("fullname", mssql.VarChar, fullname)
+       .input("email", mssql.VarChar, email)
+       .input("phone_no", mssql.VarChar, phone_no)
+       .input("password", mssql.VarChar, hashedPwd)
+       .execute("registerUser");
 
-    console.log(result);
+    // let result = dbhelper.execute("registerUser", {
+    //   UserID,
+    //   fullname,
+    //   email,
+    //   phone_no,
+    //   password: hashedPwd,
+    // });
+
+    // console.log(result);
 
     return res.status(200).json({
       message: "User registered successfully",
